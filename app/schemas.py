@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from pydantic import BaseModel, Field, field_validator
 from typing import Literal
-import isodate
 
 
 class VideoCreate(BaseModel):
