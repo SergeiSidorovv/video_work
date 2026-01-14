@@ -30,3 +30,9 @@ class VideoRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class VideoStatusUpdate(BaseModel):
+    status: Literal["new", "transcoded", "recognized"] = Field(
+        ...,
+    )
