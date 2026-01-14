@@ -6,6 +6,12 @@ from app.models import Video
 
 
 async def get_video_or_404(video_id: int, db: AsyncSession) -> Video:
+    """
+    Checks for video, returns video if available, and raises an exception if missing
+    param video_id: Unique video ID
+    param db: Session for database
+    return: Video by a unique identifier
+    """
     query = select(Video).where(Video.id == video_id)
     result = await db.execute(query)
     video = result.scalar_one_or_none()

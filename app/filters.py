@@ -7,6 +7,7 @@ from app.models import Video
 
 
 class VideoFilter(Filter):
+
     status: Optional[List[str]] = None
     camera_number: Optional[List[int]] = None
     location: Optional[List[str]] = None
