@@ -5,18 +5,12 @@ import os
 
 from .config import settings
 
-use_null_pool = os.getenv("USE_NULL_POOL", "false").lower() == "true"
 
 engine_kwargs = {
     "url": settings.database_url_asyncpg,
     "pool_pre_ping": True,
     "echo": False,
 }
-
-if use_null_pool:
-    from sqlalchemy.pool import NullPool
-
-    engine_kwargs["poolclass"] = NullPool
 
 engine = create_async_engine(**engine_kwargs)
 
