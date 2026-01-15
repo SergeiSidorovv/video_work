@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:15
+    container_name: videos_postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=${NAME_DB}
+      - POSTGRES_PASSWORD=${PASSWORD_DB}
+      - POSTGRES_USER=${USER_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    container_name: videos_api
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:

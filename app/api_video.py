@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from fastapi_filter import FilterDepends
-from typing import List
 
 from app.controller import get_video_or_404
 from app.database import get_db
@@ -14,7 +13,7 @@ video_router = APIRouter(prefix="/videos", tags=["Videos"])
 
 
 @video_router.post("", response_model=VideoRead, status_code=status.HTTP_201_CREATED)
-async def create_video(video: VideoCreate, db: AsyncSession = Depends(get_db)) -> Video:
+async def create_video(video: VideoCreate, db: AsyncSession = Depends(get_db)):
     """
     Adds a new video
     param video: The parameters of the new video that we will be adding
@@ -39,7 +38,7 @@ async def create_video(video: VideoCreate, db: AsyncSession = Depends(get_db)) -
 async def get_videos(
     db: AsyncSession = Depends(get_db),
     video_filter: VideoFilter = FilterDepends(VideoFilter),
-) -> List[Video]:
+):
     """
     Get a list of videos that we have filtered out.
     param db: Session for database
@@ -53,7 +52,7 @@ async def get_videos(
 
 
 @video_router.get("/{video_id}", response_model=VideoRead)
-async def get_video_by_id(video_id: int, db: AsyncSession = Depends(get_db)) -> Video:
+async def get_video_by_id(video_id: int, db: AsyncSession = Depends(get_db)):
     """
     Get the video by the id parameter, if the video is not found, it raise an error
     param video_id: Unique video ID
@@ -67,7 +66,7 @@ async def get_video_by_id(video_id: int, db: AsyncSession = Depends(get_db)) -> 
 @video_router.patch("/{video_id}/status")
 async def update_status_video(
     video_id: int, data: VideoStatusUpdate, db: AsyncSession = Depends(get_db)
-) -> Video:
+):
     """
     Putch the status of the video, according to the option set by the user
     param video_id: Unique video ID
